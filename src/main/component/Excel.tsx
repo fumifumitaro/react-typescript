@@ -49,34 +49,42 @@ const data: Array<[string, string, string, string, string]> = [
     ]
 ]
 
+function onClick(idx: number){
+    console.log('ok', idx)
+}
+
 export default class Excel extends React.Component {
     render() {
         return (
             <table>
                 <thead>
+                    <tr>
+                        {
+                            headers.map((header: string, idx: number) => {
+                                return (
+                                    <th key={idx}>{header}</th>
+                                )
+                            })
+                        }
+                    </tr>
+                </thead>
+                <tbody>
                     {
-                        headers.map((header: string) => {
+                        data.map((row: Array<string>, idx: number) => {
                             return (
-                                <th>{header}</th>
+                                <tr onClick={onClick.bind(this, idx)} key={idx}>
+                                    {
+                                        row.map((item: string, idx: number) => {
+                                            return (
+                                                <td key={idx}>{item}</td>
+                                            )
+                                        })
+                                    }
+                                </tr>
                             )
                         })
                     }
-                </thead>
-                {
-                    data.map((row: Array<string>) => {
-                        return (
-                            <tr>
-                                {
-                                    row.map((item: string) => {
-                                        return (
-                                            <td>{item}</td>
-                                        )
-                                    })
-                                }
-                            </tr>
-                        )
-                    })
-                }
+                </tbody>
             </table>
         )
     }
